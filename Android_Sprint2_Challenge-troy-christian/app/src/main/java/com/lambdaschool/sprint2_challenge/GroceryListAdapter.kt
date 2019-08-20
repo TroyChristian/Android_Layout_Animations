@@ -8,14 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.grocery_list_item.view.*
+fun setEnterAnimation(viewToAnimate:View, position:Int){
+    val animation: Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
+    viewToAnimate.startAnimation(animation)
+}
 
 class GroceryListAdapter(val groceryList: MutableList<GroceryItem>) : RecyclerView.Adapter<GroceryListAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(parent.context)
                 .inflate(R.layout.grocery_list_item, parent, false) as View)
 
 }
@@ -23,13 +28,15 @@ class GroceryListAdapter(val groceryList: MutableList<GroceryItem>) : RecyclerVi
 override fun getItemCount(): Int {
     return groceryList.size
 }
-    fun setEnterAnimation(viewToAnimate: View, position: Int) {
-        val animation: Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.bounce_interpolator)
 
-
-override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val grocery = groceryList[position]
     holder.bindModel(grocery)
+
+    holder.groceryItemAncestor.setOnClickListener { }
+    setEnterAnimation(holder.groceryItemAncestor, position)
+
+
 
     holder.groceryImageView.setOnClickListener {
         grocery.isSelected = !grocery.isSelected

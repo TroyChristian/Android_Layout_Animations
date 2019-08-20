@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 
 
-//initial commit for layout_animation
+
 
 
 
